@@ -22,7 +22,7 @@ data "aws_ami" "eks_worker" {
   }
 
   most_recent = true
-  owners      = ["602401143452"]
+  owners      = ["${var.aws_account_number}"]
 }
 
 data "aws_iam_policy_document" "cluster_assume_role_policy" {
@@ -94,5 +94,12 @@ data "template_file" "launch_template_userdata" {
     pre_userdata        = "${lookup(var.worker_groups_launch_template[count.index], "pre_userdata", local.workers_group_defaults["pre_userdata"])}"
     additional_userdata = "${lookup(var.worker_groups_launch_template[count.index], "additional_userdata", local.workers_group_defaults["additional_userdata"])}"
     kubelet_extra_args  = "${lookup(var.worker_groups_launch_template[count.index], "kubelet_extra_args", local.workers_group_defaults["kubelet_extra_args"])}"
+  }
+}
+
+data "template_file" "trendmicro" {
+  template = "${file("${path.module}/templates/trendmicro.sh.tpl")}"
+  vars {
+    enabled = "${var.trendmicro_enabled}"
   }
 }

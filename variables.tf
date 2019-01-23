@@ -193,3 +193,12 @@ variable "worker_create_security_group" {
   description = "Whether to create a security group for the workers or attach the workers to `worker_security_group_id`."
   default     = true
 }
+
+variable "trendmicro_enabled" {
+  description = "For mdsol security"
+  default     = true
+}
+
+variable "aws_account_number" {
+  description = "AWS Account ID. - For mdsol"
+}
