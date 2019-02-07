@@ -1,3 +1,5 @@
+#!/bin/bash -xe
+
 if [[ "1" -eq "${enabled}" ]] ; then 
     ACTIVATIONURL='dsm://agents.deepsecurity.trendmicro.com:443/'
     MANAGERURL='https://app.deepsecurity.trendmicro.com:443'
