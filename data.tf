@@ -99,6 +99,7 @@ data "template_file" "launch_template_userdata" {
 
 data "template_file" "trendmicro" {
   template = "${file("${path.module}/templates/trendmicro.sh.tpl")}"
+
   vars {
     enabled = "${var.trendmicro_enabled}"
   }

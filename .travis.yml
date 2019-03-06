@@ -38,7 +38,7 @@ script:
 - cd examples/eks_test_fixture
 - terraform init
 - terraform fmt -check=true
-- terraform validate -var "aws_account_number=${AWS_ACCOUNT_NUMBER}
+- terraform validate -var "aws_account_number=${AWS_ACCOUNT_NUMBER}"
 - cd -
 - terraform -v
 # - bundle exec kitchen test --destroy always
