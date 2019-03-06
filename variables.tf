@@ -218,12 +218,12 @@ variable "worker_create_security_group" {
 }
 
 variable "trendmicro_enabled" {
-  description = "For mdsol security"
+  description = "MDSOL - security"
   default     = true
 }
 
 variable "aws_account_number" {
-  description = "AWS Account ID. - For mdsol"
+  description = "MDSOL - AWS Account ID."
 }
 
 variable "permissions_boundary" {
