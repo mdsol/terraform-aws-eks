@@ -24,7 +24,7 @@ locals {
     root_iops                     = "0"                             # The amount of provisioned IOPS. This must be set with a volume_type of "io1".
     key_name                      = ""                              # The key name that should be used for the instances in the autoscaling group
     pre_userdata                  = ""                              # userdata to pre-append to the default userdata.
-    additional_userdata           = "${data.template_file.trendmicro.rendered}"       # userdata to append to the default userdata.  
+    additional_userdata           = "${data.template_file.trendmicro.rendered}"       # MDSOL - userdata to append to the default userdata.  
     ebs_optimized                 = true                            # sets whether to use ebs optimization on supported types.
     enable_monitoring             = true                            # Enables/disables detailed monitoring.
     public_ip                     = false                           # Associate a public ip address with a worker
