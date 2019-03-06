@@ -23,7 +23,12 @@ variable "write_kubeconfig" {
 }
 
 variable "manage_aws_auth" {
-  description = "Whether to write and apply the aws-auth configmap file."
+  description = "Whether to apply the aws-auth configmap file."
+  default     = true
+}
+
+variable "write_aws_auth_config" {
+  description = "Whether to write the aws-auth configmap file."
   default     = true
 }
 
@@ -101,6 +106,15 @@ variable "workers_group_defaults" {
   default     = {}
 }
 
+variable "worker_group_tags" {
+  description = "A map defining extra tags to be applied to the worker group ASG."
+  type        = "map"
+
+  default = {
+    default = []
+  }
+}
+
 variable "worker_groups_launch_template" {
   description = "A list of maps defining worker group configurations to be defined using AWS Launch Templates. See workers_group_defaults for valid keys."
   type        = "list"
@@ -122,6 +136,15 @@ variable "workers_group_launch_template_defaults" {
   description = "Override default values for target groups. See workers_group_defaults_defaults in locals.tf for valid keys."
   type        = "map"
   default     = {}
+}
+
+variable "worker_group_launch_template_tags" {
+  description = "A map defining extra tags to be applied to the worker group template ASG."
+  type        = "map"
+
+  default = {
+    default = []
+  }
 }
 
 variable "worker_security_group_id" {
@@ -195,10 +218,15 @@ variable "worker_create_security_group" {
 }
 
 variable "trendmicro_enabled" {
-  description = "For mdsol security"
+  description = "MDSOL - security"
   default     = true
 }
 
 variable "aws_account_number" {
-  description = "AWS Account ID. - For mdsol"
+  description = "MDSOL - AWS Account ID."
+}
+
+variable "permissions_boundary" {
+  description = "If provided, all IAM roles will be created with this permissions boundary attached."
+  default     = ""
 }

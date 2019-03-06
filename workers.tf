@@ -5,11 +5,13 @@ resource "aws_autoscaling_group" "workers" {
   desired_capacity      = "${lookup(var.worker_groups[count.index], "asg_desired_capacity", local.workers_group_defaults["asg_desired_capacity"])}"
   max_size              = "${lookup(var.worker_groups[count.index], "asg_max_size", local.workers_group_defaults["asg_max_size"])}"
   min_size              = "${lookup(var.worker_groups[count.index], "asg_min_size", local.workers_group_defaults["asg_min_size"])}"
+  force_delete          = "${lookup(var.worker_groups[count.index], "asg_force_delete", local.workers_group_defaults["asg_force_delete"])}"
   target_group_arns     = ["${compact(split(",", coalesce(lookup(var.worker_groups[count.index], "target_group_arns", ""), local.workers_group_defaults["target_group_arns"])))}"]
   launch_configuration  = "${element(aws_launch_configuration.workers.*.id, count.index)}"
   vpc_zone_identifier   = ["${split(",", coalesce(lookup(var.worker_groups[count.index], "subnets", ""), local.workers_group_defaults["subnets"]))}"]
   protect_from_scale_in = "${lookup(var.worker_groups[count.index], "protect_from_scale_in", local.workers_group_defaults["protect_from_scale_in"])}"
   suspended_processes   = ["${compact(split(",", coalesce(lookup(var.worker_groups[count.index], "suspended_processes", ""), local.workers_group_defaults["suspended_processes"])))}"]
+  enabled_metrics       = ["${compact(split(",", coalesce(lookup(var.worker_groups[count.index], "enabled_metrics", ""), local.workers_group_defaults["enabled_metrics"])))}"]
   count                 = "${var.worker_group_count}"
 
   tags = ["${concat(
@@ -18,10 +20,13 @@ resource "aws_autoscaling_group" "workers" {
       map("key", "kubernetes.io/cluster/${aws_eks_cluster.this.name}", "value", "owned", "propagate_at_launch", true),
       map("key", "k8s.io/cluster-autoscaler/${lookup(var.worker_groups[count.index], "autoscaling_enabled", local.workers_group_defaults["autoscaling_enabled"]) == 1 ? "enabled" : "disabled"  }", "value", "true", "propagate_at_launch", false)
     ),
-    local.asg_tags)
+    local.asg_tags,
+    var.worker_group_tags[contains(keys(var.worker_group_tags), "${lookup(var.worker_groups[count.index], "name", count.index)}") ? "${lookup(var.worker_groups[count.index], "name", count.index)}" : "default"])
   }"]
 
   lifecycle {
+    create_before_destroy = true
+
     ignore_changes = ["desired_capacity"]
   }
 }
@@ -109,6 +114,7 @@ resource "aws_security_group_rule" "workers_ingress_cluster_https" {
 resource "aws_iam_role" "workers" {
   name_prefix           = "${aws_eks_cluster.this.name}"
   assume_role_policy    = "${data.aws_iam_policy_document.workers_assume_role_policy.json}"
+  permissions_boundary  = "${var.permissions_boundary}"
   force_detach_policies = true
 }
 

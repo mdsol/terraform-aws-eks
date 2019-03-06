@@ -60,3 +60,7 @@ variable "map_users_count" {
   type        = "string"
   default     = 2
 }
+
+variable "aws_account_number" {
+  description = "MDSOL - AWS Account ID."
+}
