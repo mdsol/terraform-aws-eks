@@ -6,9 +6,9 @@ Inspired by and adapted from [this doc](https://www.terraform.io/docs/providers/
 and its [source code](https://github.com/terraform-providers/terraform-provider-aws/tree/master/examples/eks-getting-started).
 Read the [AWS docs on EKS to get connected to the k8s dashboard](https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html).
 
-| Branch | Build status                                                                                                                                                      |
-| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| master | [![build Status](https://travis-ci.org/terraform-aws-modules/terraform-aws-eks.svg?branch=master)](https://travis-ci.org/terraform-aws-modules/terraform-aws-eks) |
+| Branch | Build status |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| develop | [![Build Status](https://travis-ci.com/mdsol/terraform-aws-eks.svg?branch=develop)](https://travis-ci.com/mdsol/terraform-aws-eks) |
 
 ## Assumptions
 
