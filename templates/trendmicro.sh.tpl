@@ -62,6 +62,6 @@ if [[ "1" -eq "${enabled}" ]] ; then
 
     sleep 15
     /opt/ds_agent/dsa_control -r
-    /opt/ds_agent/dsa_control -a $ACTIVATIONURL "tenantID:54483705-86EE-8FB4-1606-A4109442522B" "token:1BF6C720-5227-334F-70BE-FDC67753791F" "policyid:3"
+    /opt/ds_agent/dsa_control -a $ACTIVATIONURL "tenantID:54483705-86EE-8FB4-1606-A4109442522B" "token:1BF6C720-5227-334F-70BE-FDC67753791F" "policyid:1801"
 
 fi
